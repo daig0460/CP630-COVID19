@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ec.project</groupId>
+  <artifactId>ec-project</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>ec project</name>
+  <description>maven project for weka predictions</description>
+  
+   <dependencies>
+  		
+  		<dependency>
+			<groupId>nz.ac.waikato.cms.weka</groupId>
+			<artifactId>weka-stable</artifactId>
+			<version>3.8.0</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-core -->
+		<dependency>
+		    <groupId>org.apache.spark</groupId>
+		    <artifactId>spark-core_2.12</artifactId>
+		    <version>3.2.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-mllib -->
+		<dependency>
+		    <groupId>org.apache.spark</groupId>
+		    <artifactId>spark-mllib_2.12</artifactId>
+		    <version>3.2.0</version>
+		</dependency>
+
+	
+     	<!-- https://mvnrepository.com/artifact/org.scala-lang/scala-reflect -->
+		<dependency>
+		    <groupId>org.scala-lang</groupId>
+		    <artifactId>scala-reflect</artifactId>
+		    <version>2.13.7</version>
+		</dependency>
+
+         
+        <!-- https://mvnrepository.com/artifact/org.scala-lang.modules/scala-xml -->
+		<dependency>
+		    <groupId>org.scala-lang.modules</groupId>
+		    <artifactId>scala-xml_2.13</artifactId>
+		    <version>2.0.1</version>
+		</dependency>
+	</dependencies>
+</project>
