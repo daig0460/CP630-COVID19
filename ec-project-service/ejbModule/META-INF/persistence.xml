@@ -8,6 +8,7 @@
         <jta-data-source>java:/MySqlDS</jta-data-source>
         <class>ec.project.db.User</class>
         <class>ec.project.db.Model</class>
+        <class>ec.project.db.Log</class>
         <properties>
             <!-- Properties for Hibernate -->
             <property name="hibernate.hbm2ddl.auto" value="update" />

@@ -13,20 +13,20 @@ private EntityManager entityManager;
         this.entityManager = entityManager;
     }
     
-    public List<Model> findAll() {
-        return entityManager.createQuery("from Model").getResultList();
+    public List<PredictionModel> findAll() {
+        return entityManager.createQuery("from Predictionmodel").getResultList();
     }
     
     //Also acts as save
-    public void createModel(Model model) {
+    public void createModel(PredictionModel model) {
         entityManager.persist(model);
     }
     
     //Get all info
-    public Model findModel(String modelName) {
-    	Model foundModel;
+    public PredictionModel findModel(String modelName) {
+    	PredictionModel foundModel;
     	try {
-	        foundModel =  entityManager.createQuery("SELECT m FROM Model m WHERE m.modelname = :name", Model.class)
+	        foundModel =  entityManager.createQuery("SELECT m FROM Predictionmodel m WHERE m.modelname = :name", PredictionModel.class)
 	        		.setParameter("name", modelName)
 	        		.getSingleResult();
     	} catch (NoResultException e) {

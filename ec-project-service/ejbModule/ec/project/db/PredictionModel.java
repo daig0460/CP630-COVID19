@@ -7,8 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="model")
-public class Model {
+@Table(name="predictionmodel")
+public class PredictionModel {
 	
 	@Id
 	@GeneratedValue
@@ -20,10 +20,10 @@ public class Model {
 	@Column
 	private boolean isviewable;
 	
-	public Model() {
+	public PredictionModel() {
 	}
 	
-	public Model(String modelName, boolean isviewable) {
+	public PredictionModel(String modelName, boolean isviewable) {
 	
 		this.modelname = modelName;
 	    this.isviewable = isviewable;

@@ -7,8 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user")
-public class User {
+@Table(name="appusers")
+public class AppUsers {
 	@Id
     @GeneratedValue
     private int userid;
@@ -22,10 +22,10 @@ public class User {
     @Column(columnDefinition = "boolean default false")
     private boolean isadmin;
     
-    public User() {
+    public AppUsers() {
 	}
     
-    public User(String name, String pass, boolean admin) {
+    public AppUsers(String name, String pass, boolean admin) {
         this.username = name;
         this.password = pass;
         this.isadmin = admin;
@@ -35,11 +35,11 @@ public class User {
     	return userid; 
     }
 
-    public String getName() { 
+    public String getUsername() { 
     	return username; 
     }
     
-    public void setName(String name) {  
+    public void setUsername(String name) {  
     	this.username = name; 
     }
     
