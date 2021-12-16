@@ -14,7 +14,7 @@ private EntityManager entityManager;
     }
     
     public List<PredictionModel> findAll() {
-        return entityManager.createQuery("from Predictionmodel").getResultList();
+        return entityManager.createQuery("from PredictionModel").getResultList();
     }
     
     //Also acts as save
@@ -26,7 +26,7 @@ private EntityManager entityManager;
     public PredictionModel findModel(String modelName) {
     	PredictionModel foundModel;
     	try {
-	        foundModel =  entityManager.createQuery("SELECT m FROM Predictionmodel m WHERE m.modelname = :name", PredictionModel.class)
+	        foundModel =  entityManager.createQuery("SELECT m FROM PredictionModel m WHERE m.modelname = :name", PredictionModel.class)
 	        		.setParameter("name", modelName)
 	        		.getSingleResult();
     	} catch (NoResultException e) {

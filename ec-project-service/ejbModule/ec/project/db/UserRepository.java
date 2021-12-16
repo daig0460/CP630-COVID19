@@ -18,16 +18,16 @@ public class UserRepository {
     }
     
     public List<AppUsers> findAll() {
-        return entityManager.createQuery("from Appusers").getResultList();
+        return entityManager.createQuery("from AppUsers").getResultList();
     }
 
     public AppUsers findByID(int id) {
-    	AppUsers user = entityManager.createQuery("SELECT u FROM Appusers u WHERE u.userid = :Userid",  AppUsers.class).setParameter("Userid", id).getSingleResult();
+    	AppUsers user = entityManager.createQuery("SELECT u FROM AppUsers u WHERE u.userid = :userid",  AppUsers.class).setParameter("userid", id).getSingleResult();
         return user != null ? user : null;
     }
     
     public AppUsers findByName(String name) {
-        List<AppUsers> users = entityManager.createQuery("SELECT u FROM Appusers u WHERE u.username = :name", AppUsers.class)
+        List<AppUsers> users = entityManager.createQuery("SELECT u FROM AppUsers u WHERE u.username = :name", AppUsers.class)
                 .setParameter("name", name)
                 .getResultList();
         if (users.size() == 0) return null;
@@ -37,7 +37,7 @@ public class UserRepository {
     public AppUsers authorize(String name, String pass) {
     	AppUsers user;
     	try {
-	        user = entityManager.createQuery("SELECT u FROM Appusers u WHERE u.username = :name AND u.password = :pass", AppUsers.class)
+	        user = entityManager.createQuery("SELECT u FROM AppUsers u WHERE u.username = :name AND u.password = :pass", AppUsers.class)
 	                .setParameter("name", name).setParameter("pass", pass)
 	                .getSingleResult();
     	} catch (NoResultException e) {
