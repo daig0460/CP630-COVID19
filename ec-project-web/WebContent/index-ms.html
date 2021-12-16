@@ -1,0 +1,44 @@
+<!DOCTYPE HTM>
+<html>
+<head>
+<title>EC Spring Grade and Rank Micro Service</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+function updateHref(id) {
+	var ref = "a[href='" + id + "/'";
+	var select = "#"+id;
+	var new_uri = id + "/" + $(select).val();
+	$(ref).prop('href', new_uri)
+ }
+</script>
+</head>
+
+<body>
+	 Enter a grade number to get its letter grade: <br>
+     Value: <input type = "text" id = "grade">
+     <a href="grade/" onclick="updateHref('grade')">Submit</a>
+     <br>
+     <br>
+     
+     Enter a grade number to get its rank: <br>
+     Value: <input type = "text" id = "rank">
+     <a href="rank/" onclick="updateHref('rank')">Submit</a>
+     <br>
+     <br>
+     
+     Enter a grade number to get its letter grade and rank: <br>
+     Value: <input type = "text" id = "grade_rank">
+     <a href="grade_rank/" onclick="updateHref('grade_rank')">Submit</a>
+     <br>
+     <br>
+     
+     Enter a list of 5 comma separated values to get the prediction for house selling price: <br>
+     (E.g. 3198,9669,5,1,1)
+     Values (5 values, comma separated): <input type = "text" id = "predict">
+     <a href="predict/" onclick="updateHref('predict')">Submit</a>
+     <br>
+     <br>
+     
+</body>
