@@ -31,7 +31,7 @@ public class LogStateful implements LogStatefulLocal {
     }
 
 	@Override
-	public void createUser(Log newlog) {
+	public void createLog(Log newlog) {
 		logrep = new LogRepository(entityManager);
 		logrep.createLog(newlog);
 	}
