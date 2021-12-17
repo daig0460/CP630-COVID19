@@ -29,6 +29,20 @@ public class AppUserStateful implements AppUserStatefulLocal {
         // TODO Auto-generated constructor stub
     }
 
+
+	@Override
+	public void createUser(AppUsers newuser) {
+		userrep = new UserRepository(entityManager);
+        userrep.createUser(newuser);
+		
+	}
+
+	@Override
+	public AppUsers deleteUser(String username) {
+        userrep = new UserRepository(entityManager);
+        return userrep.deleteUser(username);
+	}
+	
 	@Override
 	public AppUsers validate(String username, String pass) {
         userrep = new UserRepository(entityManager);

@@ -41,36 +41,38 @@ public class ProjectDBClientInsert {
 			connection = DriverManager.getConnection(DB_URL, USER, PASS);
 			statement = connection.createStatement();
 
-            sql = "INSERT INTO ecuser (name, password, role) VALUES ('ChubbsAdmin', 'mypass', 1)";
+            sql = "INSERT INTO appusers (username, password, isadmin) VALUES ('admin', '1234', 1)";
             statement.execute(sql);
             
-            sql = "INSERT INTO ecuser (name, password, role) VALUES ('ChubbsDeveloper', 'mypass', 2)";
+            sql = "INSERT INTO appusers (username, password) VALUES ('general', '1234')";
             statement.execute(sql);
             
-            sql = "INSERT INTO ecuser (name, password, role) VALUES ('ChubbsGeneral', 'mypass', 3)";
+            sql = "INSERT INTO predictionmodel (modelname, isviewable) VALUES ('KNN_One_Dose', 0)";
             statement.execute(sql);
-			
-			sql = "INSERT INTO model (name, classname, object) VALUES ('myStats', ?, ?)";
-			PreparedStatement ps = (PreparedStatement) connection.prepareStatement(sql);
-			//StatsSummary ssobj = new StatsSummary(3, 1, 3, 2, 0.8165);
-	
-			// set input parameters
-			//ps.setString(1, ssobj.getClass().getName());
-			//ps.setObject(2, ssobj);
-			
-			ps.executeUpdate(); //executes the SQP statement
+            
+            sql = "INSERT INTO predictionmodel (modelname, isviewable) VALUES ('KNN_Fully_Vaccinated', 1)";
+            statement.execute(sql);
+            
+            sql = "INSERT INTO predictionmodel (modelname, isviewable) VALUES ('LN_Death', 0)";
+            statement.execute(sql);
+            
+            sql = "INSERT INTO predictionmodel (modelname, isviewable) VALUES ('LN_Resolved', 0)";
+            statement.execute(sql);
+            
+            sql = "INSERT INTO predictionmodel (modelname, isviewable) VALUES ('RF_PHU', 0)";
+            statement.execute(sql);
+            
+            System.out.println("Successfully inserted into model!");
 
-			ps.close();
-
-			statement = connection.createStatement();
-			rs = statement.executeQuery("SELECT object FROM model");
-			
-			while (rs.next()) {
-				System.out.println(read(rs, "object").toString());
-			}
-
-			rs.close();
-			statement.close();
+//			statement = connection.createStatement();
+//			rs = statement.executeQuery("SELECT object FROM model");
+//			
+//			while (rs.next()) {
+//				System.out.println(read(rs, "object").toString());
+//			}
+//
+//			rs.close();
+//			statement.close();
 
 		} catch (SQLException e) { // Handle errors for JDBC
 			e.printStackTrace();

@@ -1,5 +1,8 @@
 package ec.project.ejb;
 
+import java.io.File;
+import java.util.StringJoiner;
+
 import javax.ejb.Stateless;
 import weka.classifiers.Classifier;
 import weka.core.Instance;
@@ -8,9 +11,11 @@ import weka.core.Instances;
  * Session Bean implementation class PredictionModelStateless
  */
 @Stateless
-public class KNNOneDoseStateless implements PredictionModelStatelessLocal {
+public class KNNOneDoseStateless implements WekaPredictionStatelessLocal {
 
 	private String modelPath = "KNN\\K_Nearest_Neighbor_One_Dose_Vaccinated.model";
+	private String arffDataSet = "KNN_One_Dose_Vaccinated_Prediction.arff";
+	private int predictionIndex = 3;
 	Classifier cls;
     /**
      * Default constructor. 
@@ -24,16 +29,17 @@ public class KNNOneDoseStateless implements PredictionModelStatelessLocal {
 		double value = -1;
 		try {
 			//Load the model
-			cls = PredictionModelStatelessLocal.loadModel(modelPath);
+			cls = WekaPredictionStatelessLocal.loadModel(modelPath);
 			
-			//Load the arff file? TODO
-			Instances predicationDataSet = null;
+			//Create temp .arff file with user's input for prediction
+			File tempArff = WekaPredictionStatelessLocal.copyDataSet(arffDataSet, predictionData);
 			
-			//Parse the input data for prediction TODO
-			String formatedData = parsePredictionData(predictionData); 
+			//Load the arff file
+			Instances predicationDataSet = WekaPredictionStatelessLocal.loadDataSet(tempArff);
+			predicationDataSet.setClassIndex(predictionIndex);
 			
 			//Make the prediction
-			Instance predicationDataInstance = predicationDataSet.lastInstance();
+			Instance predicationDataInstance = predicationDataSet.instance(predictionIndex);
 			value = cls.classifyInstance(predicationDataInstance);
 			
 			//Format output
@@ -45,8 +51,15 @@ public class KNNOneDoseStateless implements PredictionModelStatelessLocal {
 		return String.valueOf(value);
 	}
 	
-	private String parsePredictionData(String predictionData) {
-		return null;
+	public String parsePredictionData(String date, String phu, String age) {
+		StringJoiner joiner = new StringJoiner(",");
+		String phu_mod = "'"+phu+"'";
+		String age_mod = "'"+age+"'";
+		joiner.add(date);
+		joiner.add(phu_mod);
+		joiner.add(age_mod);
+		joiner.add("?");
+		return joiner.toString();
 	}
 
 }

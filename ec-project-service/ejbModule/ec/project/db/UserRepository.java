@@ -17,6 +17,14 @@ public class UserRepository {
         entityManager.persist(user);
     }
     
+    public AppUsers deleteUser(String name) {
+    	AppUsers deletedUser = findByName(name);
+    	if (deletedUser != null) {
+    		entityManager.remove(deletedUser);
+    	}
+        return deletedUser;
+    }
+    
     public List<AppUsers> findAll() {
         return entityManager.createQuery("from AppUsers").getResultList();
     }
