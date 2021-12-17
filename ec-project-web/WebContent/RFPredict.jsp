@@ -80,34 +80,34 @@
 				<h2 class="jumbotron rounded center shadow p-3 mt-2 mb-3 bg-white text-center">Random Forest: Public Health Unit (PHU) Prediction</h2>
 			</div>
 			
-			<form method="post" action="/[ejb-project]/[servlet]">
+			<form method="post" action="/ec-project-web/RFServlet">
 				<div class="container ui-grid-solo center shadow p-3 mb-3 bg-white rounded">
 					<div class="ui-block-a">
 						<div class="ui-field-contain">
 							<label for="Date">Date:</label>
-							<input name="datepicker" id="datepicker" data-role="date" type="text" />
+							<input name="date" id="date" data-role="date" type="text" />
 						</div>
 					</div>
 					
 					<div class="ui-block-a">
 						<div class="ui-field-contain">
-							<label for="active-cases">Active Cases:</label>
-							<input type="number" id="active-cases" name="active-cases" />
+							<label for="activecases">Active Cases:</label>
+							<input type="number" id="activecases" name="activecases" />
 						</div>
 					</div>
 					
 					<div class="ui-block-a">
 						<div class="ui-field-contain">
-							<label for="resolved-cases">Resolved Cases:</label>
-							<input type="number" id="resolved-cases" name="resolved-cases" />
+							<label for="resolvedcases">Resolved Cases:</label>
+							<input type="number" id="resolvedcases" name="resolvedcases" />
 						</div>
 					</div>
 					
 					
 					<div class="ui-block-a">
 						<div class="ui-field-contain">
-							<label for="death-cases">Death Cases:</label>
-							<input type="number" id="death-cases" name="death-cases" />
+							<label for="deaths">Death Cases:</label>
+							<input type="number" id="deaths" name="deaths" />
 						</div>
 					</div>
 					

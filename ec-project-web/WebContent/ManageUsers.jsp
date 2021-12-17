@@ -128,21 +128,21 @@
 			</table>
 		</div>
 
-		<form method="post" action="/[ejb-project]/[servlet]">
+		<form method="post" action="/ec-project-web/ManageServlet">
 			<div
 				class="container ui-grid-solo center shadow p-3 mb-5 bg-white rounded">
 				<h3>Add New User</h3>
 				<div class="ui-block-a">
 					<div class="ui-field-contain">
-						<label for="userNameVal">Username:</label> 
-						<input type="text" id="userNameVal" name="userNameVal" />
+						<label for="username">Username:</label> 
+						<input type="text" id="username" name="username" />
 					</div>
 				</div>
 
 				<div class="ui-block-a">
 					<div class="ui-field-contain">
-						<label for="passVal">Password:</label> 
-						<input type="password" id="passVal" name="passVal" />
+						<label for="password">Password:</label> 
+						<input type="password" id="password" name="password" />
 					</div>
 				</div>
 

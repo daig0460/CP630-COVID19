@@ -32,7 +32,7 @@ public class PredictionModelStateful implements PredictionModelStatefulLocal {
 	@Override
 	public void saveModel(PredictionModel model) {
 		modelrep = new ModelRepository(entityManager);
-        modelrep.createModel(model);
+        modelrep.saveModel(model);
 	}
 
 	@Override

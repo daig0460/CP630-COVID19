@@ -18,7 +18,6 @@ private EntityManager entityManager;
         return entityManager.createQuery("from Log").getResultList();
     }
     
-    //Also acts as save
     public void createLog(Log log) {
         entityManager.persist(log);
     }

@@ -17,9 +17,12 @@ private EntityManager entityManager;
         return entityManager.createQuery("from PredictionModel").getResultList();
     }
     
-    //Also acts as save
     public void createModel(PredictionModel model) {
         entityManager.persist(model);
+    }
+    
+    public void saveModel(PredictionModel model) {
+        entityManager.merge(model);
     }
     
     //Get all info

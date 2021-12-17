@@ -29,8 +29,8 @@ public class RFServlet extends HttpServlet {
             throws ServletException, IOException {
     	
     	String date = request.getParameter("date");
-    	String activecases = request.getParameter("active");
-    	String resolvedcases = request.getParameter("resolved");
+    	String activecases = request.getParameter("activecases");
+    	String resolvedcases = request.getParameter("resolvedcases");
     	String deaths = request.getParameter("deaths");
     	
     	//Set up the input
@@ -39,17 +39,19 @@ public class RFServlet extends HttpServlet {
         //Make prediction
         String result = rfphu.predict(predictionData);
         
+        System.out.println(result);
         //Create Log entry for user
-        HttpSession session = request.getSession(false);
-        int userid = (int) session.getAttribute("userid");
-        Log newLog = new Log(userid, new Date(), result);
-        
-        //Persist log to DB
-        logsbean.createLog(newLog);
+//        HttpSession session = request.getSession(false);
+//        int userid = (int) session.getAttribute("userid");
+//        Log newLog = new Log(userid, new Date(), result);
+//        
+//        //Persist log to DB
+//        logsbean.createLog(newLog);
         
         //Format output
         PrintWriter pw = response.getWriter();
     	pw.close();
        
+    	response.sendRedirect("RFPredict.jsp");
     }
 }

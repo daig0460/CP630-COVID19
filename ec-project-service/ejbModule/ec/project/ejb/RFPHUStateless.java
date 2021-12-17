@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.StringJoiner;
 
@@ -73,7 +74,9 @@ public class RFPHUStateless implements RFPHUStatelessLocal {
 	}
 	
 	private Classifier loadModel() throws Exception {
-		return (Classifier) weka.core.SerializationHelper.read(this.modelPath);
+		System.out.println("Loading Model...");
+		InputStream in = this.getClass().getClassLoader().getResourceAsStream(this.modelPath);
+		return (Classifier) weka.core.SerializationHelper.read(in);
 	}
 
 	private File copyDataSet(String data) throws IOException {

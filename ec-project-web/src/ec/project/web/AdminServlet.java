@@ -20,14 +20,25 @@ public class AdminServlet extends HttpServlet {
     @EJB
     PredictionModelStatefulLocal modelsbean;
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+    		throws ServletException, IOException {
+    	List<PredictionModel> dbmodels = modelsbean.getAllModels();
+    	for (PredictionModel model: dbmodels) {
+    		int modelId = model.getId();
+    		String modelName = model.getModelname();
+    		boolean modelToggle = model.getIsviewable();
+    		//Send the values to JSP TODO
+    	}
+    }
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //Get model info
-    	boolean KNN_One_Dose = Boolean.parseBoolean(request.getParameter("KNN_One_Dose"));
-    	boolean KNN_Fully_Vaccinated = Boolean.parseBoolean(request.getParameter("KNN_Fully_Vaccinated"));
-    	boolean LR_Deaths = Boolean.parseBoolean(request.getParameter("LR_Deaths"));
-    	boolean LR_Resolved = Boolean.parseBoolean(request.getParameter("LR_Resolved"));
-    	boolean RF_PHU = Boolean.parseBoolean(request.getParameter("RF_PHU"));
+    	boolean KNN_One_Dose = request.getParameter("KNN_One_Dose") != null;
+    	boolean KNN_Fully_Vaccinated = request.getParameter("KNN_Fully_Vaccinated") != null;
+    	boolean LR_Deaths = request.getParameter("LR_Deaths") != null;
+    	boolean LR_Resolved = request.getParameter("LR_Resolved") != null;
+    	boolean RF_PHU = request.getParameter("RF_PHU") != null;
         
     	PrintWriter pw = response.getWriter();
 
@@ -55,7 +66,7 @@ public class AdminServlet extends HttpServlet {
         	//Save the model
         	modelsbean.saveModel(model);       		
         }
-        
+        response.sendRedirect("AdminSettings.jsp");
 //        HttpSession session = request.getSession(false);
 //        session.setAttribute("username", username);
 //        session.setAttribute("isadmin", loginUser.getIsadmin());
