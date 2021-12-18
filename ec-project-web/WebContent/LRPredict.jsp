@@ -91,11 +91,11 @@
 				<h2 class="jumbotron rounded center shadow p-3 mt-2 mb-3 bg-white text-center">Linear Regression: [Death Cases Prediction OR Resolved Cases Prediction]</h2>
 			</div>
 			
-			<form method="post" action="/[ejb-project]/[servlet]">
+			<form method="post" action="/ec-project-web/LRServlet">
 				<div class="container ui-grid-solo center shadow p-3 mb-3 bg-white rounded">
 						<div>
-							<label for="Date">Date:</label>
-							<input name="datepicker" id="datepicker" class="form-control" type="text" />
+							<label for="date">Date:</label>
+							<input name="date" id="date" class="form-control" type="text" />
 						</div>
 						<div class="mt-2">
 							<label for="phu">Public Heath Unit (PHU):</label>
@@ -138,22 +138,24 @@
 								<option value="YORK REGION">YORK REGION</option>
 							</select>
 						</div>
-					
+						
 						<div class="mt-2">
-							<label for="active-cases">Active Cases:</label>
-							<input type="number" class="form-control" id="active-cases" name="active-cases" />
+							<label for="activecases">Active Cases:</label>
+							<input type="number" class="form-control" id="activecases" name="activecases" />
 						</div>
 					
 						<div class="mt-2">
-							<label for="resolved-cases">Resolved Cases:</label>
-							<input type="number" class="form-control" id="resolved-cases" name="resolved-cases" />
+							<label for="resolvedcases">Resolved Cases:</label>
+							<input type="number" class="form-control" id="resolvedcases" name="resolvedcases" />
 						</div>
 					
 					
 						<div class="mt-2">
-							<label for="death-cases">Death Cases:</label>
-							<input type="number" class="form-control" id="death-cases" name="death-cases" />
+							<label for="deaths">Death Cases:</label>
+							<input type="number" class="form-control" id="deaths" name="deaths" />
 						</div>
+					
+					<input type="hidden" name="modelType" id="modelType" value="${param.type}" />
 					
 					<div class="mt-2">
 						<input type="submit" class="btn btn-primary" value="Predict">
@@ -164,7 +166,7 @@
 			<div class="container center shadow p-3 mb-5 bg-white rounded">
 				<h2 class="text-center">Prediction Results</h2>
 				<div class="bg-secondary text-white rounded shadow p-3">
-					<h6 name="predictionResult" id="predictionResult">[Results go here?]</h6>
+					<h6 name="predictionResult" id="predictionResult">${param.result}</h6>
 				</div>
 			</div>
 		</div>

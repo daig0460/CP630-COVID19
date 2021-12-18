@@ -1,15 +1,17 @@
 package ec.project.ejb;
 
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.io.ObjectInputStream;
 import java.util.StringJoiner;
 
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import ec.project.db.Weka;
+import ec.project.db.WekaRepository;
 import weka.classifiers.Classifier;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -20,9 +22,10 @@ import weka.core.converters.ConverterUtils.DataSource;
 @Stateless
 public class LRResolvedStateless implements LRResolvedStatelessLocal {
 
-	private String data_dir = "resources\\prediction\\";
-	private String modelPath = "resources\\models\\LinearRegression\\Linear_Regression_Resolved_Cases.model";
-	private String arffDataSet = "Resolved_Cases_Prediction.arff";
+	@PersistenceContext(unitName="primary")
+    private EntityManager entityManager;
+	
+    private WekaRepository wekarep;
 	private int predictionIndex = 2;
 	Classifier cls;
     /**
@@ -44,21 +47,18 @@ public class LRResolvedStateless implements LRResolvedStatelessLocal {
 	}
 	
 	@Override
-	public String predict(String predictionData) {
+	public String predict(File predictionArff) {
 		double value = -1;
 		try {
 			//Load the model
 			cls = loadModel();
 			
-			//Create temp .arff file with user's input for prediction
-			File tempArff = copyDataSet(predictionData);
-			
 			//Load the arff file
-			Instances predictionDataSet = loadDataSet(tempArff);
+			Instances predictionDataSet = loadDataSet(predictionArff);
 			predictionDataSet.setClassIndex(predictionIndex);
 			
 			//Make the prediction
-			Instance predictionDataInstance = predictionDataSet.instance(predictionIndex);
+			Instance predictionDataInstance = predictionDataSet.lastInstance();
 			value = cls.classifyInstance(predictionDataInstance);
 			
 			//Format output
@@ -71,20 +71,17 @@ public class LRResolvedStateless implements LRResolvedStatelessLocal {
 	}
 
 	private Classifier loadModel() throws Exception {
-		return (Classifier) weka.core.SerializationHelper.read(this.modelPath);
-	}
-
-	private File copyDataSet(String data) throws IOException {
-		String newFileName = this.arffDataSet.substring(0, this.arffDataSet.lastIndexOf("."));
-		File tempArff = File.createTempFile(newFileName + "_temp", ".arff", new File("resources/"));
-		tempArff.deleteOnExit();
-		File mainArff = new File(data_dir + this.arffDataSet);
-		Files.copy(mainArff.toPath(), tempArff.toPath(), REPLACE_EXISTING);
-		FileWriter writer = new FileWriter(tempArff, true);
-		writer.write(data);
-		writer.flush();
-		writer.close();
-		return tempArff;
+		//Pull database model
+		wekarep = new WekaRepository(entityManager);
+		Weka sqlModel = wekarep.findModel("LR_Resolved");
+		if (sqlModel == null) {
+			throw new Exception("Invalid model name, please try again.");
+		}
+		
+		byte[] buf = sqlModel.getModel();   
+	    ObjectInputStream objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
+	    //System.out.println("Loaded Model!");
+	    return (Classifier) objectIn.readObject();
 	}
 
 	private Instances loadDataSet(File dataSet) throws Exception {

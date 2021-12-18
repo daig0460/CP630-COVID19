@@ -23,12 +23,10 @@ public class AdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
     	List<PredictionModel> dbmodels = modelsbean.getAllModels();
-    	for (PredictionModel model: dbmodels) {
-    		int modelId = model.getId();
-    		String modelName = model.getModelname();
-    		boolean modelToggle = model.getIsviewable();
-    		//Send the values to JSP TODO
-    	}
+    	//Send modellist to JSP
+    	request.setAttribute("allModels", dbmodels);
+    	request.getRequestDispatcher("AdminSettings.jsp").forward(request, response);
+
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -39,8 +37,6 @@ public class AdminServlet extends HttpServlet {
     	boolean LR_Deaths = request.getParameter("LR_Deaths") != null;
     	boolean LR_Resolved = request.getParameter("LR_Resolved") != null;
     	boolean RF_PHU = request.getParameter("RF_PHU") != null;
-        
-    	PrintWriter pw = response.getWriter();
 
         List<PredictionModel> dbmodels = modelsbean.getAllModels();
         
@@ -66,12 +62,6 @@ public class AdminServlet extends HttpServlet {
         	//Save the model
         	modelsbean.saveModel(model);       		
         }
-        response.sendRedirect("AdminSettings.jsp");
-//        HttpSession session = request.getSession(false);
-//        session.setAttribute("username", username);
-//        session.setAttribute("isadmin", loginUser.getIsadmin());
-//        response.sendRedirect("Index.jsp");
-
-        pw.close();
+        response.sendRedirect("AdminServlet");
     }
 }

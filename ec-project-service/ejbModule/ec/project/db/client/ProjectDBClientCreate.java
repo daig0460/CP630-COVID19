@@ -45,13 +45,20 @@ public class ProjectDBClientCreate {
             
             sql = "CREATE TABLE IF NOT EXISTS log ("
             		+ "logid INT AUTO_INCREMENT PRIMARY KEY, "
-            		+ "userid INT NOT NULL UNIQUE, "
+            		+ "userid INT NOT NULL, "
             		+ "date TIMESTAMP, "
             		+ "loginfo VARCHAR(255) NOT NULL, " 
             		+ "FOREIGN KEY (userid) REFERENCES appusers(userid))";            
             statement.execute(sql);
+            
+            sql = "CREATE TABLE IF NOT EXISTS weka ("
+            		+ "id INT AUTO_INCREMENT PRIMARY KEY, "
+            		+ "modelname VARCHAR(255) NOT NULL UNIQUE, "
+            		+ "model LONGBLOB NOT NULL,"
+            		+ "arff MEDIUMBLOB NOT NULL)";            
+            statement.execute(sql);
 
-            System.out.println("Successfully created 3 tables!");
+            System.out.println("Successfully created 4 tables!");
         } catch (SQLException e) { // Handle errors for JDBC
             e.printStackTrace();
         } catch (Exception e) {   // Handle errors for Class.forName

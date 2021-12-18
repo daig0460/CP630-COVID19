@@ -15,7 +15,6 @@ public class Log {
     @GeneratedValue
     private int logid;
     
-    @Column(unique = true)
     private int userid;
     
     @Column

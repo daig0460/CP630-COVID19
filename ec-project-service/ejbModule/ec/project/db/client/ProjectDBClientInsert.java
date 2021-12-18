@@ -62,7 +62,52 @@ public class ProjectDBClientInsert {
             sql = "INSERT INTO predictionmodel (modelname, isviewable) VALUES ('RF_PHU', 0)";
             statement.execute(sql);
             
+//            sql = "INSERT INTO weka (modelname, model, arff) VALUES ('RF_PHU', ?, ?)";
+//			PreparedStatement ps = (PreparedStatement) connection.prepareStatement(sql);
+//	
+//			//load model
+//			Classifier cls = (Classifier) weka.core.SerializationHelper.read("src\\main\\resources\\resources\\models\\RandomForest\\Random_Forest_PHU.model");
+//			File mainArff = new File("src\\main\\resources\\resources\\prediction\\Random_Forest_PHU_Prediction.arff");
+//
+//			ByteArrayOutputStream bos_model = new ByteArrayOutputStream();
+//			ByteArrayOutputStream bos_arff = new ByteArrayOutputStream();
+//			ObjectOutputStream modelOut = new ObjectOutputStream(bos_model);
+//			ObjectOutputStream arffOut = new ObjectOutputStream(bos_arff);
+//			
+//			modelOut.writeObject(cls);
+//			arffOut.writeObject(mainArff);
+//			
+//		    byte[] buf = bos_model.toByteArray();
+//		    byte[] arffbuf = bos_arff.toByteArray();
+//			// set input parameters
+//			ps.setObject(1, buf);
+//			ps.setObject(2, arffbuf);
+//			
+//			ps.executeUpdate(); //executes the SQP statement
+//
+//			ps.close();
             System.out.println("Successfully inserted into model!");
+
+//			statement = connection.createStatement();
+//			sql = "SELECT * FROM weka WHERE modelname = 'RF_PHU'";
+//            rs = statement.executeQuery(sql);
+//			
+//            if (rs != null) {
+//            	
+//                while (rs.next()) {
+//
+//                    byte[] buftest = rs.getBytes("arff");
+//                    if (buf != null) {
+//                    	ObjectInputStream objectIn = new ObjectInputStream(new ByteArrayInputStream(buftest));
+//                    	File arffFile = (File) objectIn.readObject();
+//                    	Instances tester = DataSource.read(new FileInputStream(arffFile));
+//                    	System.out.println(tester.toString());
+//                    }
+//                }
+//            }
+//
+//			rs.close();
+//			statement.close();
 
 //			statement = connection.createStatement();
 //			rs = statement.executeQuery("SELECT object FROM model");

@@ -92,8 +92,8 @@
 			<form method="post" action="/ec-project-web/RFServlet">
 				<div class="container center shadow p-3 mb-3 bg-white rounded">
 						<div>
-							<label for="datepicker">Date:</label>
-							<input name="datepicker" id="datepicker" class="form-control" type="text" />
+							<label for="date">Date:</label>
+							<input name="date" id="date" class="form-control" type="text" />
 						</div>
 					
 						<div class="mt-2">
@@ -121,7 +121,7 @@
 			<div class="container center shadow p-3 mb-5 bg-white rounded">
 				<h2 class="text-center">Prediction Results</h2>
 				<div class="bg-secondary text-white rounded shadow p-3">
-					<h6 name="predictionResult" id="predictionResult">[Results go here?]</h6>
+					<h6 name="predictionResult" id="predictionResult">${param.result}</h6>
 				</div>
 				
 			</div>

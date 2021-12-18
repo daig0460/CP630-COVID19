@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +26,7 @@
 					<li class="nav-item"><a class="nav-link"
 						href="/ec-project-web/AdminSettings.jsp">Prediction Preferences</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/ec-project-web/ManageUsers.jsp">Manage Users</a></li>
+						href="/ec-project-web/ManageServlet">Manage Users</a></li>
 					<li class="nav-item">
 						<ul class="navbar-nav">
 							<li class="nav-item dropdown"><a

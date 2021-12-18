@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import ec.project.db.AppUsers;
 import ec.project.ejb.AppUserStatefulLocal;
@@ -25,39 +24,47 @@ public class ManageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
     	List<AppUsers> allUsers = appusers.getAllUsers();
-    	//Display all users TODO
-    	
-    	//Delete user
-    	String username = request.getParameter("username");
-    	AppUsers loginUser = appusers.deleteUser(username);
+    	//Send userlist to JSP
+    	request.setAttribute("appUsers", allUsers);
+    	request.getRequestDispatcher("ManageUsers.jsp").forward(request, response);
     }
     
     //Add Users
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	//Get new user details
-    	String username = request.getParameter("username");
-        String password = request.getParameter("password");     
-        boolean isAdmin = request.getParameter("isAdmin") != null;
-        int isadmin = isAdmin ? 1 : 0;
-        //Hash the password
-        try {
-			password = PasswordHashing.HashPassword(password);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println("Unable to hash password, please try again");
-			response.sendRedirect("ManageUsers.jsp");
-		}
-        
-        //Create new User and persist to database
-        AppUsers newUser = new AppUsers(username, password, isAdmin);
-        System.out.println(newUser.toString());
-        appusers.createUser(newUser);
-        
-        System.out.println("Successfully added new user: " + newUser.getUsername());
-		response.sendRedirect("ManageUsers.jsp");
-		
-        PrintWriter pw = response.getWriter();
-        pw.close();
+    	
+    	String action = request.getParameter("action");
+    	
+    	if (action.equals("delete")) {
+    		//Delete user
+        	String username = request.getParameter("username");
+        	AppUsers deletedUser = appusers.deleteUser(username);
+        	System.out.println("Successfully deleted user: " + deletedUser.getUsername());
+    		response.sendRedirect("ManageServlet");
+    	}
+    	
+    	//Adding new user
+    	else {
+    		//Get new user details
+        	String username = request.getParameter("username");
+            String password = request.getParameter("password");     
+            boolean isAdmin = request.getParameter("isAdmin") != null;
+
+            //Hash the password
+            try {
+    			password = PasswordHashing.HashPassword(password);
+    		} catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			System.out.println("Unable to hash password, please try again");
+    			response.sendRedirect("ManageUsers.jsp");
+    		}
+            
+            //Create new User and persist to database
+            AppUsers newUser = new AppUsers(username, password, isAdmin);
+            appusers.createUser(newUser);
+            
+            System.out.println("Successfully added new user: " + newUser.getUsername());
+    		response.sendRedirect("ManageServlet");
+    	}
     }
 }
