@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ec.project.db.Log;
 import ec.project.ejb.LogStatefulLocal;
@@ -23,10 +24,19 @@ public class LogServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-    	List<Log> allLogs = logsbean.getAllLogs();
-    	//Send LogList to JSP
-    	request.setAttribute("allLogs", allLogs);
-    	request.getRequestDispatcher("Logs.jsp").forward(request, response);
+    	List<Log> allLogs = logsbean.getAllLogs();   
+    	
+    	for (Log log : allLogs)
+    	{
+        	System.out.println("Log ID:" + log.getId()+  "User ID:" + log.getUserid() + "Info:" + log.getLoginfo());
+    	}
+    	
+    	HttpSession session = request.getSession(true);
+    	
+    	//Send Log List to JSP
+    	session.setAttribute("allLogs", allLogs);
+    	response.sendRedirect("Logs.jsp");
+    	//request.getRequestDispatcher("Logs.jsp").forward(request, response);
         
         //Logs by User
 //        HttpSession session = request.getSession(false);

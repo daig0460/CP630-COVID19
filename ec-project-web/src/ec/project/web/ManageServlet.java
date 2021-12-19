@@ -20,9 +20,9 @@ public class ManageServlet extends HttpServlet {
     @EJB
     AppUserStatefulLocal appusers;
 
-    //Delete users
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
+    	
     	List<AppUsers> allUsers = appusers.getAllUsers();
     	//Send userlist to JSP
     	request.setAttribute("appUsers", allUsers);
@@ -35,16 +35,8 @@ public class ManageServlet extends HttpServlet {
     	
     	String action = request.getParameter("action");
     	
-    	if (action.equals("delete")) {
-    		//Delete user
-        	String username = request.getParameter("username");
-        	AppUsers deletedUser = appusers.deleteUser(username);
-        	System.out.println("Successfully deleted user: " + deletedUser.getUsername());
-    		response.sendRedirect("ManageServlet");
-    	}
-    	
     	//Adding new user
-    	else {
+    	if (action.equals("add")) {
     		//Get new user details
         	String username = request.getParameter("username");
             String password = request.getParameter("password");     
@@ -56,7 +48,7 @@ public class ManageServlet extends HttpServlet {
     		} catch (Exception e) {
     			// TODO Auto-generated catch block
     			System.out.println("Unable to hash password, please try again");
-    			response.sendRedirect("ManageUsers.jsp");
+    			response.sendRedirect("ManageServlet");
     		}
             
             //Create new User and persist to database
@@ -64,7 +56,15 @@ public class ManageServlet extends HttpServlet {
             appusers.createUser(newUser);
             
             System.out.println("Successfully added new user: " + newUser.getUsername());
-    		response.sendRedirect("ManageServlet");
     	}
+    	else if (action.equals("delete"))
+    	{
+    		//Delete user
+    		String username = request.getParameter("userToDelete");
+    		AppUsers deletedUser = appusers.deleteUser(username);
+    		System.out.println("Successfully deleted user: " + deletedUser.getUsername());        		
+    	}
+    	
+    	response.sendRedirect("ManageServlet");
     }
 }

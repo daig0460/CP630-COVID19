@@ -60,12 +60,12 @@ public class RFServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         int userid = (int) session.getAttribute("userid");
         Log newLog = new Log(userid, new Date(), result);      
-        //Persist log to DB
+        // Persist log to DB
         logsbean.createLog(newLog);
         
         //Format output
         System.out.println(result);
-    	response.sendRedirect("RFPredict.jsp?result=" + result);
+    	response.sendRedirect("RFPredict.jsp?result=Date: " + date + " / Active Cases: " + activecases + " / Resolved Cases: " + resolvedcases + " / Death Cases: " + deaths + " / Predicted PHU: " + result);
     }
     
     private File copyDataSet(ServletContext sc, String arffDataSet, String parsedData) throws IOException, URISyntaxException {

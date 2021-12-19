@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ec.project.db.PredictionModel;
 import ec.project.ejb.PredictionModelStatefulLocal;
@@ -23,10 +24,34 @@ public class AdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
     	List<PredictionModel> dbmodels = modelsbean.getAllModels();
-    	//Send modellist to JSP
+    	
+    	HttpSession session = request.getSession(true);
+    	
+    	//Send model list to JSP
     	request.setAttribute("allModels", dbmodels);
+    	
+    	for (PredictionModel model : dbmodels)
+    	{
+    		switch(model.getModelname()) {
+	    		case "KNN_One_Dose": 
+	    			session.setAttribute("KNN_One_Dose_Is_On", model.getIsviewable());
+	    			break;
+	    		case "KNN_Fully_Vaccinated": 
+	    			session.setAttribute("KNN_Fully_Vaccinated_Is_On", model.getIsviewable());
+	    			break;
+	    		case "LR_Deaths": 
+	    			session.setAttribute("LR_Deaths_Is_On", model.getIsviewable());
+	    			break;
+	    		case "LR_Resolved": 
+	    			session.setAttribute("LR_Resolved_Is_On", model.getIsviewable());
+	    			break;
+	    		case "RF_PHU": 
+	    			session.setAttribute("RF_PHU_Is_On", model.getIsviewable());
+	    			break;
+    		}
+    	}
+    	
     	request.getRequestDispatcher("AdminSettings.jsp").forward(request, response);
-
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

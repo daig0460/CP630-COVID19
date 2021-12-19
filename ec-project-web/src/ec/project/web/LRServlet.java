@@ -52,6 +52,7 @@ public class LRServlet extends HttpServlet {
     	//Deaths Prediction
     	if (modelType.equals("Death")) {
     		//Set specific input
+    		
     		String resolvedcases = request.getParameter("resolvedcases");
     		arffDataSet = "Deaths_Prediction.arff";
     		
@@ -69,6 +70,11 @@ public class LRServlet extends HttpServlet {
             //Make prediction
     		result = deathbean.predict(predictionArff);
     		
+    		if (result.contains("-"))
+            {
+    			result = "0";
+            }
+    		
     		//Create Log entry for user
 	        HttpSession session = request.getSession(false);
 	        int userid = (int) session.getAttribute("userid");
@@ -78,7 +84,7 @@ public class LRServlet extends HttpServlet {
 	        
 	        //Format output
 	        System.out.println(result);
-			response.sendRedirect("LRPredict.jsp?modelType=Death&result=" + result);
+			response.sendRedirect("LRPredict.jsp?modelType=Death&result=PHU: " + phu + " / Active Cases: " + activecases + " / Resolved Cases: " + resolvedcases + " / Death count prediction: " + result);
     	}
     	
     	//Resolved Cases Prediction (Resolved)
@@ -91,6 +97,7 @@ public class LRServlet extends HttpServlet {
     		String predictionData = resolvedbean.parsePredictionData(phu, activecases, deaths);
     		
             //Create prediction .arff file
+    		
             try {
     			predictionArff = copyDataSet(sc, arffDataSet, predictionData);
     		} catch (URISyntaxException e) {
@@ -101,6 +108,11 @@ public class LRServlet extends HttpServlet {
             //Make prediction
             result = resolvedbean.predict(predictionArff);
             
+            if (result.contains("-"))
+            {
+            	result = "0";
+            }
+            
             //Create Log entry for user
 	        HttpSession session = request.getSession(false);
 	        int userid = (int) session.getAttribute("userid");
@@ -110,7 +122,7 @@ public class LRServlet extends HttpServlet {
 	        
 	        //Format output
 	        System.out.println(result);
-			response.sendRedirect("LRPredict.jsp?modelType=Resolved&result=" + result);
+			response.sendRedirect("LRPredict.jsp?modelType=Resolved&result=PHU: " + phu + " / Active Cases: " + activecases + " / Death Cases: " + deaths + " / Resolved count prediction: " + result);
     	}      
     }
     

@@ -77,7 +77,7 @@ public class KNNServlet extends HttpServlet {
 	        
 	        //Format output
 	        System.out.println(result);
-			response.sendRedirect("KNNPredict.jsp?modelType=SingleDose&result=" + result);
+			response.sendRedirect("KNNPredict.jsp?modelType=SingleDose&result=Date: " + date + " / PHU: " + phu + " / Age group: " + age + " / Percentage prediction: " + result);
     	}
     	
     	//Fully Vaccinated Prediction (FullyVacc)
@@ -107,7 +107,7 @@ public class KNNServlet extends HttpServlet {
 	        
 	        //Format output
 	        System.out.println(result);
-			response.sendRedirect("KNNPredict.jsp?modelType=FullyVacc&result=" + result);
+			response.sendRedirect("KNNPredict.jsp?modelType=FullyVacc&result=Date: " + date + " / PHU: " + phu + " / Age group: " + age + " / Percentage prediction: " +  result);
     	}
        
     }
